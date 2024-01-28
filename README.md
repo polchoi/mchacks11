@@ -1,1 +1,1 @@
-# mchacks11
+# ExpenseKeeper (McHacks 11)
