@@ -32,7 +32,7 @@ def read_root():
     return {"McHacks 11! By Cesar, Karman, Oliver, Yoon Sun"}
 
 # Create and add a new user information to the database
-@app.post("/users/", status_code=status.HTTP_201_CREATED)
+@app.post("/users/create", status_code=status.HTTP_201_CREATED)
 async def create_user(user: UsersBase, db: db_dependency):
     db_user = models.Users(**user.dict())
     db.add(db_user)
