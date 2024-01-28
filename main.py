@@ -1,12 +1,27 @@
-from typing import Union, Annotated
+from typing import Annotated, List
 from fastapi import FastAPI, HTTPException, Depends, status
 from pydantic import BaseModel
 import models
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 models.Base.metadata.create_all(bind=engine)
+
+app = FastAPI()
 
 class UsersBase(BaseModel):
     username: str
@@ -26,6 +41,8 @@ def get_db():
         db.close()
 
 db_dependency = Annotated[Session, Depends(get_db)]
+
+models.Base.metadata.create_all(bind=engine)
 
 @app.get("/")
 def read_root():
@@ -68,12 +85,12 @@ async def create_expense_record(exprecord: ExpenseRecordBase, db: db_dependency)
     return db_exprecord
 
 # Get expense record from the database
-@app.get("/expense-records/{exp_id}", status_code=status.HTTP_200_OK)
-async def get_expense_record(exp_id: int, db: db_dependency):
-    db_exp_id = db.query(models.ExpenseRecord).filter(models.ExpenseRecord.id == exp_id).first()
-    if db_exp_id is None:
+@app.get("/expense-records/", status_code=status.HTTP_200_OK, response_model=List[ExpenseRecordModel])
+async def get_expense_record(db: db_dependency, skip: int = 0, limit: int = 100):
+    db_exp_rec = db.query(models.ExpenseRecord).offset(skip).limit(limit).all()
+    if db_exp_rec is None:
         HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Expense record not found")
-    return db_exp_id
+    return db_exp_rec
 
 # Delete expense record from the database
 @app.delete("/expense-records/delete/{exp_id}", status_code=status.HTTP_200_OK)
