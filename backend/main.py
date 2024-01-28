@@ -31,7 +31,7 @@ class UsersModel(UsersBase):
         orm_mode = True
 
 class ExpenseRecordBase(BaseModel):
-    username: str
+    # username: str
     merchant_name: str
     price: float
     category: str
@@ -85,7 +85,7 @@ async def delete_user(username: str, db: db_dependency):
     return {"message": "User deleted"}
 
 # Add expense record to the database
-@app.post("/expense-records/", status_code=status.HTTP_201_CREATED)
+@app.post("/expense-record/", status_code=status.HTTP_201_CREATED)
 async def create_expense_record(exprecord: ExpenseRecordBase, db: db_dependency):
     db_exprecord = models.ExpenseRecord(**exprecord.dict())
     db.add(db_exprecord)

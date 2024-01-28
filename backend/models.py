@@ -11,7 +11,7 @@ class ExpenseRecord(Base):
     __tablename__ = "expense_records"
     
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String(50))
+    # username = Column(String(50))
     merchant_name = Column(String(100))
     price = Column(Float)
     category = Column(String(50))
