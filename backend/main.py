@@ -1,7 +1,7 @@
 from typing import Annotated, List
 from fastapi import FastAPI, HTTPException, Depends, status
 from pydantic import BaseModel
-import backend.models as models
+import models
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
