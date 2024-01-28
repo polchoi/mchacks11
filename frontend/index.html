@@ -13,7 +13,7 @@
             My Expense Analyser
             <small class="text-muted">to manage your spendings</small>
         </h1>
-        <table class="table">
+        <table class="table" id="table">
             <thead>
               <tr>
                 <th scope="col">$</th>
@@ -27,30 +27,30 @@
                 <th scope="row">1</th>
                 <td>Mark</td>
                 <td>Otto</td>
-                <td><button type="button" class="btn btn-danger">Delete</button></td>
+                <td><button type="button" class="btn btn-danger" onclick="del()">Delete</button></td>
               </tr>
               <tr>
                 <th scope="row">2</th>
                 <td>Jacob</td>
                 <td>Thornton</td>
-                <td><button type="button" class="btn btn-danger">Delete</button></td>
+                <td><button type="button" class="btn btn-danger" onclick="del()">Delete</button></td>
               </tr>
               <tr>
                 <th scope="row">3</th>
                 <td>Larry</td>
                 <td>the Bird</td>
-                <td><button type="button" class="btn btn-danger">Delete</button></td>
+                <td><button type="button" class="btn btn-danger" onclick="del()">Delete</button></td>
               </tr>
             </tbody>
           </table>
           <a class="btn btn-primary" href="Expense_adding.html" role="button">Add Expense</a>
           <br>
-          <h6>You have spent a total of $ x this month, distributed in the following way:</h6>
+          <h6>You have spent a total of $ <span id="spent"></span> this month, distributed in the following way:</h6>
 
 
 
 
-          <table class="table">
+          <table class="table" id="table">
             <tr>
                 <td class="text-center">
                     <img src="entertainement_icon.png" alt="Money spent on entertainement" class="img-thumbnail" width="100">
